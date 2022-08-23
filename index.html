@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<title>Projeto2</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" ; />
+
+		<link rel="stylesheet" href="reset.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="responsive.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap"
+			rel="stylesheet" />
+		<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+	</head>
+
+	<body>
+		<div class="big-container">
+			<div class="main">
+				<div class="top-menu">
+					<img src="media/logobpuol.png" />
+					<ion-icon name="people-outline"></ion-icon>
+				</div>
+				<!-- fim top-menu -->
+				<ul class="messages-body">
+					<li class="enter-leave">
+						<span><span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> entrou na sala...</span>
+					</li>
+					<li class="normal-message">
+						<span
+							><span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> para <strong>Todos</strong>: Bom
+							dia</span
+						>
+					</li>
+					<li class="normal-message">
+						<span>
+							<span class="time-stamp">(Time Stamp)</span><strong>Fulana </strong> para <strong>Fulano</strong>: Oi João
+							:)
+						</span>
+					</li>
+					<li class="reserved-message">
+						<span>
+							<span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> reservadamente para
+							<strong>Fulana</strong>: Oi gatinha quer tc?
+						</span>
+					</li>
+					<li class="enter-leave">
+						<span><span class="time-stamp">(Time Stamp)</span><strong>Fulana</strong> sai da sala...</span>
+					</li>
+				</ul>
+				<!-- fim messages-body -->
+				<div class="send-message">
+					<input class="text-message" placeholder="Escreva aqui..." />
+					<ion-icon name="paper-plane-outline"></ion-icon>
+				</div>
+				<!-- fim send-message -->
+			</div>
+			<!-- fim main -->
+			<div class="side-menu hide">
+				<h1>Escolha um contato para enviar mensagem:</h1>
+				<ul class="participants">
+					<li><span>icone</span> <span>Todos</span> <span>icone</span></li>
+					<li><span>icone</span> <span>Fulano</span> <span>icone</span></li>
+					<li><span>icone</span> <span>Fulana</span> <span>icone</span></li>
+				</ul>
+				<!-- fim participants -->
+				<h1>Escolha a visibilidade</h1>
+				<ul>
+					<li><span>icone</span>Público</li>
+					<li><span>icone</span>Reservadamente</li>
+				</ul>
+			</div>
+			<!-- fim side-menu -->
+			<div class="login-page hide">
+				<span>icone</span>
+				<input class="name-input" placeholder="Digite seu nome" />
+				<button class="enter-button">Entrar</button>
+			</div>
+		</div>
+		<!-- fim big-container -->
+	</body>
+</html>
