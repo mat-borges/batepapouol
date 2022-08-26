@@ -20,39 +20,21 @@
 			<div class="main">
 				<div class="top-menu">
 					<img src="media/logobpuol.png" />
-					<ion-icon name="people-outline"></ion-icon>
+					<ion-icon name="people-outline" onclick="showSide()"></ion-icon>
 				</div>
 				<!-- fim top-menu -->
 				<ul class="messages-body">
-					<li class="enter-leave">
-						<span><span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> entrou na sala...</span>
-					</li>
-					<li class="normal-message">
-						<span
-							><span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> para <strong>Todos</strong>: Bom
-							dia</span
-						>
-					</li>
-					<li class="normal-message">
-						<span>
-							<span class="time-stamp">(Time Stamp)</span><strong>Fulana </strong> para <strong>Fulano</strong>: Oi João
-							:)
-						</span>
-					</li>
 					<li class="reserved-message">
 						<span>
 							<span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> reservadamente para
 							<strong>Fulana</strong>: <span class="message">Oi gatinha quer tc?</span>
 						</span>
 					</li>
-					<li class="enter-leave">
-						<span><span class="time-stamp">(Time Stamp)</span><strong>Fulana</strong> sai da sala...</span>
-					</li>
 				</ul>
 				<!-- fim messages-body -->
 				<div class="send-message">
 					<input type="text" class="text-message" placeholder="Escreva aqui..." />
-					<ion-icon name="paper-plane-outline"></ion-icon>
+					<ion-icon name="paper-plane-outline" onclick="sendMessage()"></ion-icon>
 				</div>
 				<!-- fim send-message -->
 			</div>

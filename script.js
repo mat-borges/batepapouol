@@ -9,16 +9,27 @@ function enterUser() {
 	const promiseEnter = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', user);
 
 	promiseEnter.then(testAnswer);
-	promiseEnter.then(errorMessage);
+	promiseEnter.then(errorMessageUser);
+}
+
+// scroll overflow to bottom when entering the page
+function updateScroll() {
+	let element = document.querySelector('.messages-body');
+	element.scrollTop = element.scrollHeight;
 }
 
 function testAnswer(answer) {
 	console.log(answer.data);
+	getMessages();
+	setTimeout(updateScroll, 1000);
 }
 
-function errorMessage(answer) {
-	console.log('Deu ruim!');
-	console.log(answer.data.status);
+// compilar todas as mensagens de erro!!!!!!!!!!!!!!!!!!!!!!!!!
+function errorMessageUser(errro) {
+	if (errro.data.status >= 0) {
+		console.log('Deu ruim! enterUser');
+		console.log(errro.data.status);
+	}
 }
 
 //popular quadro de mensagens
@@ -56,31 +67,47 @@ function populateBody(answer) {
 	console.log(answer);
 }
 
-getMessages();
-// <ul class="messages-body">
-// 	<li class="enter-leave">
-// 		<span><span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> entrou na sala...</span>
-// 	</li>
-// 	<li class="normal-message">
-// 		<span
-// 			><span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> para <strong>Todos</strong>: Bom
-// 			dia</span
-// 		>
-// 	</li>
-// 	<li class="normal-message">
-// 		<span>
-// 			<span class="time-stamp">(Time Stamp)</span><strong>Fulana </strong> para <strong>Fulano</strong>: Oi João
-// 			:)
-// 		</span>
-// 	</li>
-// 	<li class="reserved-message">
-// 		<span>
-// 			<span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> reservadamente para
-// 			<strong>Fulana</strong>: <span class="message">Oi gatinha quer tc?</span>
-// 		</span>
-// 	</li>
-// 	<li class="enter-leave">
-// 		<span><span class="time-stamp">(Time Stamp)</span><strong>Fulana</strong> sai da sala...</span>
-// 	</li>
-// </ul>
-// <!-- fim messages-body -->
+// compilar todas as mensagens de erro!!!!!!!!!!!!!!!!!!!!!!!!!
+function errorMessage(error) {
+	console.log('Deu ruim! getMessages');
+	console.log(error.data);
+}
+
+// enviar mensagem
+
+function sendMessage() {
+	const messageValue = document.querySelector('.text-message').value;
+
+	let message = {
+		from: userName,
+		to: 'Todos', //'nome do destinatário (Todos se não for um específico)',
+		text: messageValue,
+		type: 'message',
+	};
+	const textSend = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', message);
+
+	textSend.then(messageSent);
+	textSend.catch();
+}
+
+function messageSent(answer) {
+	const messageValue = document.querySelector('.text-message');
+	messageValue.value = '';
+
+	getMessages();
+	console.log('Mensagem enviada com sucesso');
+	console.log(answer);
+}
+
+// compilar todas as mensagens de erro!!!!!!!!!!!!!!!!!!!!!!!!!
+function errorMessageSend(error) {
+	console.log('Deu ruim! getMessages');
+	console.log(error.data);
+}
+
+function showSide() {
+	console.log('oi');
+}
+
+// const intervalID = setInterval(getMessages, 3000);
+enterUser();

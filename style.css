@@ -70,12 +70,12 @@ img:hover {
 }
 
 .messages-body li {
-	height: 40px;
+	min-height: 40px;
 	display: inline-flex;
 	align-items: center;
 	margin-bottom: 4px;
 	border-radius: 2px;
-	min-height: 40px;
+	flex-wrap: wrap;
 }
 
 .messages-body .normal-message {
