@@ -42,7 +42,7 @@
 					<li class="reserved-message">
 						<span>
 							<span class="time-stamp">(Time Stamp)</span><strong>Fulano </strong> reservadamente para
-							<strong>Fulana</strong>: Oi gatinha quer tc?
+							<strong>Fulana</strong>: <span class="message">Oi gatinha quer tc?</span>
 						</span>
 					</li>
 					<li class="enter-leave">
@@ -51,7 +51,7 @@
 				</ul>
 				<!-- fim messages-body -->
 				<div class="send-message">
-					<input class="text-message" placeholder="Escreva aqui..." />
+					<input type="text" class="text-message" placeholder="Escreva aqui..." />
 					<ion-icon name="paper-plane-outline"></ion-icon>
 				</div>
 				<!-- fim send-message -->
@@ -90,7 +90,7 @@
 				<!-- fim side-menu -->
 			</div>
 			<!-- fim bigger-side-menu -->
-			<div class="login-page">
+			<div class="login-page hide">
 				<img src="media/logobpuol.png" />
 				<div class="div-nome">
 					<input class="name-input" placeholder="Digite seu nome" />
@@ -99,6 +99,8 @@
 			</div>
 		</div>
 		<!-- fim big-container -->
+
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 		<script src="script.js"></script>
 	</body>
