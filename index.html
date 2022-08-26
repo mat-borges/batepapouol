@@ -13,7 +13,6 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap"
 			rel="stylesheet" />
-		<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 	</head>
 
 	<body>
@@ -58,27 +57,49 @@
 				<!-- fim send-message -->
 			</div>
 			<!-- fim main -->
-			<div class="side-menu hide">
-				<h1>Escolha um contato para enviar mensagem:</h1>
-				<ul class="participants">
-					<li><span>icone</span> <span>Todos</span> <span>icone</span></li>
-					<li><span>icone</span> <span>Fulano</span> <span>icone</span></li>
-					<li><span>icone</span> <span>Fulana</span> <span>icone</span></li>
-				</ul>
-				<!-- fim participants -->
-				<h1>Escolha a visibilidade</h1>
-				<ul>
-					<li><span>icone</span>Público</li>
-					<li><span>icone</span>Reservadamente</li>
-				</ul>
+			<div class="bigger-side-menu hide">
+				<div class="side-menu">
+					<h1>Escolha um contato para enviar mensagem:</h1>
+					<ul class="participants">
+						<li>
+							<ion-icon name="people-circle"></ion-icon> <span>Todos</span>
+							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
+						</li>
+						<li>
+							<ion-icon name="person-circle-outline"></ion-icon> <span>Fulano</span>
+							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
+						</li>
+						<li>
+							<ion-icon name="person-circle-outline"></ion-icon> <span>Fulana</span>
+							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
+						</li>
+					</ul>
+					<!-- fim participants -->
+					<h1>Escolha a visibilidade</h1>
+					<ul class="visibility">
+						<li>
+							<ion-icon name="lock-open"></ion-icon> <span>Público</span>
+							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
+						</li>
+						<li>
+							<ion-icon name="lock-closed"></ion-icon><span>Reservadamente</span>
+							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
+						</li>
+					</ul>
+				</div>
+				<!-- fim side-menu -->
 			</div>
-			<!-- fim side-menu -->
-			<div class="login-page hide">
-				<span>icone</span>
-				<input class="name-input" placeholder="Digite seu nome" />
-				<button class="enter-button">Entrar</button>
+			<!-- fim bigger-side-menu -->
+			<div class="login-page">
+				<img src="media/logobpuol.png" />
+				<div class="div-nome">
+					<input class="name-input" placeholder="Digite seu nome" />
+					<button class="enter-button">Entrar</button>
+				</div>
 			</div>
 		</div>
 		<!-- fim big-container -->
+		<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+		<script src="script.js"></script>
 	</body>
 </html>
