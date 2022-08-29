@@ -71,11 +71,17 @@ img:hover {
 
 .messages-body li {
 	min-height: 40px;
+	height: fit-content;
 	display: inline-flex;
 	align-items: center;
 	margin-bottom: 4px;
 	border-radius: 2px;
 	flex-wrap: wrap;
+	word-wrap: break-word;
+	word-break: break-all;
+
+	font-size: 14px;
+	line-height: 20px;
 }
 
 .messages-body .normal-message {
@@ -157,6 +163,10 @@ input[type='text'] {
 	right: 0;
 	top: 0;
 }
+.close {
+	font-size: 25px;
+	margin: 5px 0 0 5px;
+}
 
 .side-menu li {
 	display: flex;
@@ -186,7 +196,7 @@ li ion-icon {
 
 .login-page {
 	position: fixed;
-	background-color: rgba(255, 69, 0, 1); /* com opacidade 0.5 - preciso mudar isso depois */
+	background-color: rgba(255, 255, 255, 1); /* com opacidade 0.5 - preciso mudar isso depois */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -196,10 +206,26 @@ li ion-icon {
 	height: 100vh;
 }
 
-.login-page img {
+.login-page .logo-uol {
 	width: 130px;
 	height: 92px;
-	margin: 20vh 0 25vh 0;
+	margin: 20vh 0 15vh 0;
+}
+
+.spinner {
+	width: 200px;
+	height: 200px;
+	transition: display ease-in 1s;
+	filter: grayscale(100%);
+	margin-top: -50px;
+	margin-bottom: 20px;
+}
+
+.entering {
+	margin-top: 50px;
+	font-size: 18px;
+	margin-top: -20px;
+	text-align: center;
 }
 
 .div-nome {
@@ -218,10 +244,19 @@ li ion-icon {
 
 .enter-button {
 	background-color: rgba(231, 231, 231, 1);
-	border-radius: 5px;
-	border: 1px solid black;
+	border-radius: 9px;
 	width: 109px;
 	height: 45px;
+	border: none;
+
+	color: rgba(105, 105, 105, 1);
+	font-weight: 400;
+	font-size: 18px;
+}
+
+.enter-button:hover {
+	filter: brightness(0.8);
+	cursor: pointer;
 }
 
 .hide {

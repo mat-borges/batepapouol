@@ -1,35 +1,89 @@
 /* Entrando com o nome de usuário (precisa fazer o loop de perguntar
  o nome até não ter nenhum usuario com o mesmo nick) */
 let userName = '';
+let onlineID = 0;
+let messagesID = 0;
 const messagesBody = document.querySelector('.messages-body');
+const partipantsList = document.querySelector('.participants');
 
+// entrando no chat (username)
 function enterUser() {
-	userName = prompt('Escolha seu usuário');
+	userName = document.querySelector('.name-input').value;
+
+	const spinner = document.querySelectorAll('.spinner');
+	const inputLogin = document.querySelector('.name-input');
+	const enterButton = document.querySelector('.enter-button');
+	spinner.forEach((spin) => spin.classList.remove('hide'));
+	inputLogin.classList.add('hide');
+	enterButton.classList.add('hide');
+
 	const user = { name: `${userName}` };
 	const promiseEnter = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', user);
 
-	promiseEnter.then(testAnswer);
-	promiseEnter.then(errorMessageUser);
+	promiseEnter.then(loginAnswer);
+	promiseEnter.catch(errorLogin);
+}
+
+function loginAnswer(promise) {
+	const showLogin = document.querySelector('.login-page');
+	const spinner = document.querySelectorAll('.spinner');
+	showLogin.classList.add('hide');
+	spinner.forEach((spin) => spin.classList.add('hide'));
+
+	onlineID = setInterval(keepOnline, 5000);
+	messagesID = setInterval(getMessages, 3000);
+	setTimeout(updateScroll, 1000);
+}
+
+// Erro login
+function errorLogin(error) {
+	clearInterval(onlineID);
+	clearInterval(messagesID);
+
+	const spinner = document.querySelectorAll('.spinner');
+	const inputLogin = document.querySelector('.name-input');
+	const enterButton = document.querySelector('.enter-button');
+	spinner.forEach((spin) => spin.classList.add('hide'));
+	inputLogin.classList.remove('hide');
+	enterButton.classList.remove('hide');
+
+	const showLogin = document.querySelector('.login-page');
+	showLogin.classList.remove('hide');
+
+	alert(`Tente entrar com outro nome de usuário \n Erro ${error.response.status}: ${error.response.data}`);
+}
+
+//mantendo online
+function keepOnline() {
+	const user = { name: `${userName}` };
+	const promiseEnter = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', user);
+
+	promiseEnter.then(onlineOK);
+	promiseEnter.catch(onlineNotOK);
+}
+
+function onlineOK(promise) {
+	console.log(`${promise.status}: ${promise.data}`);
+}
+
+function onlineNotOK(error) {
+	const spinner = document.querySelectorAll('.spinner');
+	const inputLogin = document.querySelector('.name-input');
+	const enterButton = document.querySelector('.enter-button');
+	spinner.forEach((spin) => spin.classList.add('hide'));
+	inputLogin.classList.remove('hide');
+	enterButton.classList.remove('hide');
+
+	const showLogin = document.querySelector('.login-page');
+	showLogin.classList.remove('hide');
+
+	alert(`Você foi desconectado. Erro ${error.response.status}: ${error.response.data}`);
 }
 
 // scroll overflow to bottom when entering the page
 function updateScroll() {
 	let element = document.querySelector('.messages-body');
 	element.scrollTop = element.scrollHeight;
-}
-
-function testAnswer(answer) {
-	console.log(answer.data);
-	getMessages();
-	setTimeout(updateScroll, 1000);
-}
-
-// compilar todas as mensagens de erro!!!!!!!!!!!!!!!!!!!!!!!!!
-function errorMessageUser(errro) {
-	if (errro.data.status >= 0) {
-		console.log('Deu ruim! enterUser');
-		console.log(errro.data.status);
-	}
 }
 
 //popular quadro de mensagens
@@ -47,11 +101,13 @@ function populateBody(answer) {
 		if (answer.data[i].type === 'message') {
 			if (answer.data[i].to === 'Todos') {
 				messagesBody.innerHTML += `
-	        <li class="normal-message">
-	    		<span>
-	    			<span class="time-stamp">(${answer.data[i].time})</span><strong>${answer.data[i].from} </strong> para <strong>${answer.data[i].to}</strong> : ${answer.data[i].text}
-	    		</span>
-	    	</li>`;
+				<li class="normal-message">
+					<span>
+						<span class="time-stamp">(${answer.data[i].time})</span><strong>${answer.data[i].from} </strong> para <strong>${answer.data[i].to}</strong> : ${answer.data[i].text}
+					</span>
+				</li>`;
+				const element = document.querySelector('.normal-message');
+				element.scrollIntoView();
 			}
 		}
 		if (answer.data[i].type === 'status') {
@@ -61,20 +117,40 @@ function populateBody(answer) {
                     <span class="time-stamp">(${answer.data[i].time})</span> <strong>${answer.data[i].from} </strong> ${answer.data[i].text}
                 </span>
             </li>`;
+			const element = document.querySelector('.enter-leave');
+			element.scrollIntoView();
+		}
+		if (answer.data[i].type === 'private_message') {
+			if (answer.data[i].to === 'Todos') {
+				messagesBody.innerHTML += `
+				<li class="reserved-message">
+					<span>
+						<span class="time-stamp">(${answer.data[i].time})</span><strong>${answer.data[i].from} </strong> para <strong>${answer.data[i].to}</strong> : ${answer.data[i].text}
+					</span>
+				</li>`;
+				const element = document.querySelector('.reserved-message');
+				element.scrollIntoView();
+			} else if (answer.data[i].to === userName) {
+				messagesBody.innerHTML += `
+				<li class="reserved-message">
+					<span>
+						<span class="time-stamp">(${answer.data[i].time})</span><strong>${answer.data[i].from} </strong> para <strong>${answer.data[i].to}</strong> : ${answer.data[i].text}
+					</span>
+				</li>`;
+				const element = document.querySelector('.reserved-message');
+				element.scrollIntoView();
+			}
 		}
 	}
-
-	console.log(answer);
+	updateScroll();
 }
 
-// compilar todas as mensagens de erro!!!!!!!!!!!!!!!!!!!!!!!!!
+// Erro populate
 function errorMessage(error) {
-	console.log('Deu ruim! getMessages');
-	console.log(error.data);
+	console.log(`Não foi possível carregar as mensagens. \n Erro ${error.response.status}: ${error.response.data}`);
 }
 
 // enviar mensagem
-
 function sendMessage() {
 	const messageValue = document.querySelector('.text-message').value;
 
@@ -87,7 +163,7 @@ function sendMessage() {
 	const textSend = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', message);
 
 	textSend.then(messageSent);
-	textSend.catch();
+	textSend.catch(errorMessageSend);
 }
 
 function messageSent(answer) {
@@ -95,19 +171,14 @@ function messageSent(answer) {
 	messageValue.value = '';
 
 	getMessages();
-	console.log('Mensagem enviada com sucesso');
-	console.log(answer);
 }
 
-// compilar todas as mensagens de erro!!!!!!!!!!!!!!!!!!!!!!!!!
+// Erro sendMessage
 function errorMessageSend(error) {
-	console.log('Deu ruim! getMessages');
-	console.log(error.data);
+	alert(`Mensagem não enviada. Erro ${error.response.status}: ${error.response.data}`);
 }
 
-function showSide() {
-	console.log('oi');
+function showHideSide() {
+	const sideMenu = document.querySelector('.bigger-side-menu');
+	sideMenu.classList.toggle('hide');
 }
-
-// const intervalID = setInterval(getMessages, 3000);
-enterUser();
