@@ -1,32 +1,32 @@
 /* Entrando com o nome de usuário (precisa fazer o loop de perguntar
  o nome até não ter nenhum usuario com o mesmo nick) */
+const urlAPI = 'https://mock-api.driven.com.br/api/v6/uol';
 let userName = '';
 let onlineID = 0;
 let messagesID = 0;
 const messagesBody = document.querySelector('.messages-body');
-const partipantsList = document.querySelector('.participants');
+const participantsList = document.querySelector('.participants');
+const spinner = document.querySelectorAll('.spinner');
+const inputLogin = document.querySelector('.name-input');
+const enterButton = document.querySelector('.enter-button');
+const showLogin = document.querySelector('.login-page');
 
 // entrando no chat (username)
 function enterUser() {
 	userName = document.querySelector('.name-input').value;
 
-	const spinner = document.querySelectorAll('.spinner');
-	const inputLogin = document.querySelector('.name-input');
-	const enterButton = document.querySelector('.enter-button');
 	spinner.forEach((spin) => spin.classList.remove('hide'));
 	inputLogin.classList.add('hide');
 	enterButton.classList.add('hide');
 
 	const user = { name: `${userName}` };
-	const promiseEnter = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', user);
+	const promiseEnter = axios.post(`${urlAPI}/participants`, user);
 
 	promiseEnter.then(loginAnswer);
 	promiseEnter.catch(errorLogin);
 }
 
 function loginAnswer(promise) {
-	const showLogin = document.querySelector('.login-page');
-	const spinner = document.querySelectorAll('.spinner');
 	showLogin.classList.add('hide');
 	spinner.forEach((spin) => spin.classList.add('hide'));
 
@@ -40,14 +40,10 @@ function errorLogin(error) {
 	clearInterval(onlineID);
 	clearInterval(messagesID);
 
-	const spinner = document.querySelectorAll('.spinner');
-	const inputLogin = document.querySelector('.name-input');
-	const enterButton = document.querySelector('.enter-button');
 	spinner.forEach((spin) => spin.classList.add('hide'));
 	inputLogin.classList.remove('hide');
 	enterButton.classList.remove('hide');
 
-	const showLogin = document.querySelector('.login-page');
 	showLogin.classList.remove('hide');
 
 	alert(`Tente entrar com outro nome de usuário \n Erro ${error.response.status}: ${error.response.data}`);
@@ -56,7 +52,7 @@ function errorLogin(error) {
 //mantendo online
 function keepOnline() {
 	const user = { name: `${userName}` };
-	const promiseEnter = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', user);
+	const promiseEnter = axios.post(`${urlAPI}/status`, user);
 
 	promiseEnter.then(onlineOK);
 	promiseEnter.catch(onlineNotOK);
@@ -67,14 +63,9 @@ function onlineOK(promise) {
 }
 
 function onlineNotOK(error) {
-	const spinner = document.querySelectorAll('.spinner');
-	const inputLogin = document.querySelector('.name-input');
-	const enterButton = document.querySelector('.enter-button');
 	spinner.forEach((spin) => spin.classList.add('hide'));
 	inputLogin.classList.remove('hide');
 	enterButton.classList.remove('hide');
-
-	const showLogin = document.querySelector('.login-page');
 	showLogin.classList.remove('hide');
 
 	alert(`Você foi desconectado. Erro ${error.response.status}: ${error.response.data}`);
@@ -88,7 +79,7 @@ function updateScroll() {
 
 //popular quadro de mensagens
 function getMessages() {
-	const messages = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
+	const messages = axios.get(`${urlAPI}/messages`);
 
 	messages.then(populateBody);
 	messages.catch(errorMessage);
@@ -160,7 +151,7 @@ function sendMessage() {
 		text: messageValue,
 		type: 'message',
 	};
-	const textSend = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', message);
+	const textSend = axios.post(`${urlAPI}/messages`, message);
 
 	textSend.then(messageSent);
 	textSend.catch(errorMessageSend);
@@ -176,6 +167,37 @@ function messageSent(answer) {
 // Erro sendMessage
 function errorMessageSend(error) {
 	alert(`Mensagem não enviada. Erro ${error.response.status}: ${error.response.data}`);
+}
+
+function fillParticipants() {
+	const activeUsers = axios.get(`${urlAPI}/participants`);
+
+	activeUsers.then(answerUsers);
+	activeUsers.catch(errorUsers);
+}
+
+function answerUsers(answer) {
+	console.log(answer);
+	participantsList.innerHTML = `
+	<li>
+		<ion-icon name="people-circle"></ion-icon>
+		<span>Todos</span>
+		<ion-icon name="checkmark-sharp" class="green hide"></ion-icon>
+	</li>
+	`;
+	for (let i = 0; i < answer.data.length; i++) {
+		participantsList.innerHTML += `
+		<li>
+			<ion-icon name="person-circle-outline"></ion-icon>
+			<span>${answer.data[i].name}</span>
+			<ion-icon name="checkmark-sharp" class="green hide"></ion-icon>
+		</li>
+		`;
+	}
+}
+
+function errorUsers(error) {
+	alert(`Não foi possível atualizar os usuários. \n Erro ${error.response.status}: ${error.response.data}`);
 }
 
 function showHideSide() {

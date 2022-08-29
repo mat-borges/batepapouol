@@ -7,7 +7,6 @@
 
 		<link rel="stylesheet" href="reset.css" />
 		<link rel="stylesheet" href="style.css" />
-		<link rel="stylesheet" href="responsive.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -20,7 +19,7 @@
 			<div class="main">
 				<div class="top-menu">
 					<img src="media/logobpuol.png" />
-					<ion-icon name="people-outline" onclick="showHideSide()"></ion-icon>
+					<ion-icon name="people-outline" onclick="showHideSide(); fillParticipants()"></ion-icon>
 				</div>
 				<!-- fim top-menu -->
 				<ul class="messages-body"></ul>
@@ -36,30 +35,17 @@
 				<div class="side-menu">
 					<ion-icon class="close" name="close-outline" onclick="showHideSide()"></ion-icon>
 					<h1>Escolha um contato para enviar mensagem:</h1>
-					<ul class="participants">
-						<li>
-							<ion-icon name="people-circle"></ion-icon> <span>Todos</span>
-							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
-						</li>
-						<li>
-							<ion-icon name="person-circle-outline"></ion-icon> <span>Fulano</span>
-							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
-						</li>
-						<li>
-							<ion-icon name="person-circle-outline"></ion-icon> <span>Fulana</span>
-							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
-						</li>
-					</ul>
+					<ul class="participants"></ul>
 					<!-- fim participants -->
 					<h1>Escolha a visibilidade</h1>
 					<ul class="visibility">
 						<li>
 							<ion-icon name="lock-open"></ion-icon> <span>Público</span>
-							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
+							<ion-icon name="checkmark-sharp" class="green hide"></ion-icon>
 						</li>
 						<li>
 							<ion-icon name="lock-closed"></ion-icon><span>Reservadamente</span>
-							<ion-icon name="checkmark-sharp" class="green"></ion-icon>
+							<ion-icon name="checkmark-sharp" class="green hide"></ion-icon>
 						</li>
 					</ul>
 				</div>
